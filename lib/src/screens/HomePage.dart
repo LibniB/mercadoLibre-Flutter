@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:mercadolibre/src/screens/barraNavegacion.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -103,19 +104,7 @@ class HomePage extends StatelessWidget {
           ],
         )
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, size:30.0, color: Colors.deepPurpleAccent[200]),
-            label: "Inicio"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shop, size:30.0, color: Colors.deepPurpleAccent[200]),
-            label: "Compra"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.exit_to_app_rounded, size:30.0, color: Colors.deepPurpleAccent[200]),
-            label: "Salir"),
-        ],
-        ),
+      bottomNavigationBar: const BarraNavegacionInferior(),
     );
   }
 }

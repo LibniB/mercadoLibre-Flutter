@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mercadolibre/src/screens/HomePage.dart';
 import 'package:mercadolibre/src/screens/PerfilUsuario.dart';
+import 'package:mercadolibre/src/screens/adminUsers.dart';
 import 'package:mercadolibre/src/screens/inicioSesion.dart';
 import 'package:mercadolibre/src/screens/paginaRegistro.dart';
+import 'package:mercadolibre/src/screens/shopPage.dart';
 
 void main() {
   runApp(const MercadoLibre());
@@ -21,10 +23,12 @@ class _MercadoLibreState extends State<MercadoLibre> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: menuUsers(),
       routes: {
         '/inicio': (context) => InicioSesion(),
         '/registro' : (context) => PaginadeRegistro(),
+        '/perfilUsuario' : (context) => Perfilusuario(),
+        '/compras': (context) => shopPage(),
        // '/paginaRegistro': (context) => PaginaRegistro(),
       },
     );

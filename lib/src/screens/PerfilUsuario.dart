@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mercadolibre/src/screens/barraNavegacion.dart';
 
 class Perfilusuario extends StatelessWidget {
   const Perfilusuario({super.key});
@@ -75,6 +76,7 @@ class Perfilusuario extends StatelessWidget {
           ),
         ),
         ),
+        bottomNavigationBar: const BarraNavegacionInferior(),
     );
   }
 }
