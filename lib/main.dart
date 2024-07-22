@@ -29,6 +29,7 @@ class _MercadoLibreState extends State<MercadoLibre> {
         '/registro' : (context) => PaginadeRegistro(),
         '/perfilUsuario' : (context) => Perfilusuario(),
         '/compras': (context) => shopPage(),
+        '/adminUsers': (context) => menuUsers(), 
        // '/paginaRegistro': (context) => PaginaRegistro(),
       },
     );

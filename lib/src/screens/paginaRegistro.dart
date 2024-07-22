@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mercadolibre/src/controllers/registroUsers.dart';
 
 class PaginadeRegistro extends StatefulWidget {
   const PaginadeRegistro({super.key});
@@ -10,6 +11,21 @@ class PaginadeRegistro extends StatefulWidget {
 class _PaginadeRegistroState extends State<PaginadeRegistro> {
   final _formKey = GlobalKey<FormState>();
   String txtNombres = "";
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  Future<Users>? _futureUsers;
+
+
+  void _clearControllers() {
+    _nameController.clear();
+    _emailController.clear();
+    _passwordController.clear();
+  }
+
+  void _navigateToLogin(){
+    Navigator.pushNamed(context, '/inicio');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

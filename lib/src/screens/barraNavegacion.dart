@@ -28,6 +28,9 @@ class _BarraNavegacionInferiorState extends State<BarraNavegacionInferior> {
       case 2:
         Navigator.pushNamed(context, '/perfilUsuario');
         break;
+      case 3:
+      Navigator.pushNamed(context, '/adminUsers');
+      break;
     }
   }
 
