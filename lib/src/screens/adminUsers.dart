@@ -43,7 +43,7 @@ class _menuUsersState extends State<menuUsers> {
           leading: Icon(Icons.connect_without_contact_rounded),
           trailing: Icon(Icons.arrow_circle_right_outlined),
           onTap: () {
-            ModalConsultarOperarios(context);
+            ModalconsultarUsuarios(context);
           },
         ),
         SizedBox(height: 16.0),
