@@ -1,102 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:mercadolibre/src/controllers/Productos.dart';
 
+class ShopPage extends StatefulWidget {
+  const ShopPage({super.key});
 
-class shopPage extends StatelessWidget {
-  const shopPage({super.key});
+  @override
+  _ShopPageState createState() => _ShopPageState();
+}
+
+class _ShopPageState extends State<ShopPage> {
+  late Future<List<Product>> futureProducts;
+
+  @override
+  void initState() {
+    super.initState();
+    // Llamada a la API para obtener los productos
+    futureProducts = consultProduct();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Lista de productos
-    final List<Product> products = [
-      Product(
-        name: 'Laptop HP Pavilion',
-        imageUrl:
-            'https://exitocol.vteximg.com.br/arquivos/ids/23153666/Computador-Portatil-HP-Pavilion-Intel-Core-i5-1135G7-8-GB-256-GB-SSD-15-eg0500la-3302747_a.jpg',
-        price: 799.99,
-      ),
-      Product(
-        name: 'Mouse Logitech MX Master 3',
-        imageUrl:
-            'https://megacomputer.com.co/wp-content/uploads/2020/12/MX-MASTER.jpg1_.jpg',
-        price: 99.99,
-      ),
-      Product(
-        name: 'Teclado Mecánico Corsair K95',
-        imageUrl:
-            'https://m.media-amazon.com/images/I/7193Jl8PejL._AC_SL1500_.jpg',
-        price: 159.99,
-      ),
-      Product(
-        name: 'Monitor Dell UltraSharp 27"',
-        imageUrl:
-            'https://http2.mlstatic.com/D_NQ_NP_714206-MCO74906029819_032024-O.webp',
-        price: 349.99,
-      ),
-      Product(
-        name: 'SSD Samsung 1TB',
-        imageUrl: 'https://m.media-amazon.com/images/I/81vkjxbO-rL.jpg',
-        price: 129.99,
-      ),
-      Product(
-        name: 'Tarjeta Gráfica NVIDIA GeForce RTX 3080',
-        imageUrl:
-            'https://www.gamerscolombia.com/img/products/TARJETA-GRFICA-EVGA-GEFORCE-RTX-3080-FTW3/EVGA-GEFORCE-RTX-3080-FTW316536521151.png',
-        price: 699.99,
-      ),
-      Product(
-        name: 'Procesador AMD Ryzen 9 5900X',
-        imageUrl:
-            'https://m.media-amazon.com/images/I/61DYLoyNRWL._AC_SL1384_.jpg',
-        price: 549.99,
-      ),
-    ];
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent[200],
         foregroundColor: Colors.white,
         title: const Text('Productos'),
       ),
-      body: ListView.builder(
-        itemCount: products.length,
-        itemBuilder: (context, index) {
-          final product = products[index];
-          return Card(
-            margin: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: Image.network(
-                product.imageUrl,
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
-              ),
-              title: Text(product.name),
-              subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
-              onTap: () {
-                // Acción al tocar el producto
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Añadiste al carrito ${product.name}'),
+      body: FutureBuilder<List<Product>>(
+        future: futureProducts,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Muestra un indicador de carga mientras se obtienen los datos
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            // Muestra un mensaje de error si algo sale mal
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            // Muestra la lista de productos
+            final products = snapshot.data!;
+            return ListView.builder(
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                final product = products[index];
+                return Card(
+                  margin: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    title: Text(product.nombre),
+                    subtitle: Text(product.precio),
+                    onTap: () {
+                      // Acción al tocar el producto
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Añadiste al carrito ${product.nombre}'),
+                        ),
+                      );
+                    },
                   ),
                 );
               },
-            ),
-          );
+            );
+          } else {
+            // Muestra un mensaje si no hay productos
+            return const Center(child: Text('No hay productos disponibles'));
+          }
         },
-      )     
+      ),
     );
   }
-}
-
-// Clase para representar un producto
-class Product {
-  final String name;
-  final String imageUrl;
-  final double price;
-
-  Product({
-    required this.name,
-    required this.imageUrl,
-    required this.price,
-  });
 }
