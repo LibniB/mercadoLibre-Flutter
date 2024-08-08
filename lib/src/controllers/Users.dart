@@ -40,6 +40,7 @@ Future<List<Users>> consultUsers() async {
   }
 }
 
+
 // 3. Eliminar un usuario
 Future<Users> deleteUsers(String id) async {
   final http.Response response = await http.delete(
@@ -50,11 +51,37 @@ Future<Users> deleteUsers(String id) async {
   );
 
   if (response.statusCode == 200) {
+    print('Usuario eliminado con exitos');
     return Users.empty();
   } else {
     throw Exception('Failed to delete user.');
   }
 }
+
+
+// 4. Actualizar un usuario
+Future<Users> updateUser(String id, String nombreCompleto, String email) async {
+  final response = await http.put(
+    Uri.parse('https://nodejs-mongo-api.onrender.com/api/users/$id'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+      <String, String>{
+        "nombreCompleto": nombreCompleto,
+        "email": email,
+      },
+    ),
+  );
+
+  if (response.statusCode == 200) {
+    print('Usuario actualizado con éxito');
+    return Users.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+  } else {
+    throw Exception('Failed to update user.');
+  }
+}
+
 
 // Clase Users
 class Users {

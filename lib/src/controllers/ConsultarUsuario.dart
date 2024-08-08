@@ -14,18 +14,24 @@ Future<List<Usuario>> consultarUsuarios() async {
 }
 
 class Usuario {
+  final String _id;
   final String nombreCompleto;
   final String email;
 
   const Usuario({
+    required String id,
     required this.nombreCompleto,
     required this.email,
-  });
+  }) : _id = id;
 
   factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
+      id: json['_id'],
       nombreCompleto: json['nombreCompleto'],
       email: json['email'],
     );
   }
+
+  // Método getter para obtener _id
+  String get id => _id;
 }

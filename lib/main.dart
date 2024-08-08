@@ -23,7 +23,7 @@ class _MercadoLibreState extends State<MercadoLibre> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: menuUsers(),
+      home: HomePage(),
       routes: {
         '/inicio': (context) => InicioSesion(),
         '/registro' : (context) => PaginadeRegistro(),
