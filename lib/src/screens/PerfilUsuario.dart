@@ -11,7 +11,9 @@ class Perfilusuario extends StatelessWidget {
         backgroundColor: Colors.deepPurpleAccent[200],
         foregroundColor: Colors.white,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/home');
+          },
           icon: Icon(Icons.arrow_back, color:Colors.white)),
           title: Text(
             "Perfil",

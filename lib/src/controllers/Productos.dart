@@ -88,24 +88,29 @@ class Product {
   final String? _id;
   final String? nombre;
   final String? precio;
+  final String? descripcion;
+
 
   const Product({
     required String? id,
     required this.nombre,
     required this.precio,
+    required this.descripcion,
   }) : _id = id;
 
   // Método utilizado para limpiar los objetos
   Product.empty()
       : _id = '',
         nombre = '',
-        precio = '';
+        precio = '',
+        descripcion = '';
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['_id'] ?? '',
       nombre: json['nombre'] ?? '',
       precio: json['precio'] ?? '',
+      descripcion: json['descripcion'] ?? '',
     );
   }
 

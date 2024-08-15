@@ -45,8 +45,14 @@ class _ShopPageState extends State<ShopPage> {
                 return Card(
                   margin: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    title: Text(product.nombre),
-                    subtitle: Text(product.precio),
+                    title: Text(product.nombre ?? 'Nombre no disponible'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(product.precio.toString()),
+                        Text(product.descripcion ?? 'Descripcion no disponible'),
+                      ],
+                    ),
                     onTap: () {
                       // Acción al tocar el producto
                       ScaffoldMessenger.of(context).showSnackBar(

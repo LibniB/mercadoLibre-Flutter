@@ -25,6 +25,7 @@ class _MercadoLibreState extends State<MercadoLibre> {
       debugShowCheckedModeBanner: false,
       home: HomePage(),
       routes: {
+        '/home': (context)=> HomePage(),
         '/inicio': (context) => InicioSesion(),
         '/registro' : (context) => PaginadeRegistro(),
         '/perfilUsuario' : (context) => Perfilusuario(),

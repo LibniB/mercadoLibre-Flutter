@@ -16,7 +16,9 @@ class _menuUsersState extends State<menuUsers> {
         backgroundColor: Colors.deepPurpleAccent[200],
         foregroundColor: Colors.black,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/home');
+          },
           icon: Icon(Icons.arrow_back, color: Colors.white),
         ),
         title: Text(

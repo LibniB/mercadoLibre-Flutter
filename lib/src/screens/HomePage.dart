@@ -63,8 +63,9 @@ class HomePage extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
+                    Navigator.pushNamed(context, '/adminUsers');
                   },
-                  icon: const Icon(Icons.notifications),
+                  icon: const Icon(Icons.admin_panel_settings_sharp),
                 )
               ],
             ),
