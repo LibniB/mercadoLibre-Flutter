@@ -13,7 +13,7 @@ class _ModalConsultarUsuariosState extends State<ModalConsultarUsuarios> {
   @override
   void initState() {
     super.initState();
-    consultarUsuarios().then((consultarUsuarios) {
+    consultUsers().then((consultarUsuarios) {
       setState(() {
         _fetchOperarios = consultarUsuarios;
       });
@@ -40,7 +40,20 @@ class _ModalConsultarUsuariosState extends State<ModalConsultarUsuarios> {
                           color: Colors.deepPurpleAccent[200],
                         ),
                         onPressed: () {
-                          
+                          Users user = _fetchOperarios[index];
+
+                          showDialog(
+                            context: context, 
+                            builder: (context){
+                              return EditUserForm(
+                                user: user,
+                                onUserUpdated: (updateUser){
+                                  setState(() {
+                                    _fetchOperarios[index] = updateUser;
+                                  });
+                                },
+                                );
+                            });
                         },
                       ),
                       IconButton(
@@ -105,3 +118,68 @@ void _showEliminarUsuario(BuildContext context, String userId, VoidCallback onDe
 }
 
 
+class EditUserForm extends StatefulWidget {
+  final Users user;
+  final Function(Users) onUserUpdated;
+
+  EditUserForm({required this.user, required this.onUserUpdated});
+
+  @override
+  _EditUserFormState createState() => _EditUserFormState();
+}
+
+class _EditUserFormState extends State<EditUserForm> {
+  late TextEditingController _nameController;
+  late TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.user.nombreCompleto);
+    _emailController = TextEditingController(text: widget.user.email);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Editar Usuario'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: _nameController,
+            decoration: InputDecoration(labelText: 'Nombre Completo'),
+          ),
+          TextField(
+            controller: _emailController,
+            decoration: InputDecoration(labelText: 'Email'),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          child: Text('Cancelar'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          child: Text('Guardar'),
+          onPressed: () {
+            if (widget.user.id != null) {
+              updateUser(widget.user.id, _nameController.text, _emailController.text)
+                  .then((updatedUser) {
+                widget.onUserUpdated(updatedUser);
+                Navigator.of(context).pop();
+              }).catchError((error) {
+                print('Error al actualizar el usuario: $error');
+              });
+            } else {
+              print('Error: El ID del usuario es nulo');
+            }
+          },
+        )
+      ],
+    );
+  }
+}

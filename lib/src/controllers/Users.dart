@@ -76,12 +76,12 @@ Future<Users> updateUser(String id, String nombreCompleto, String email) async {
 
   if (response.statusCode == 200) {
     print('Usuario actualizado con éxito');
-    return Users.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    // Return a default Users object, or the original user object if you have it
+    return Users(id: id, nombreCompleto: nombreCompleto, email: email);
   } else {
     throw Exception('Failed to update user.');
   }
 }
-
 
 // Clase Users
 class Users {
